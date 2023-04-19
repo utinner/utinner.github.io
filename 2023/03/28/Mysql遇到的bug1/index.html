@@ -17,23 +17,23 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>mongo分片集 | TinnerのBlog</title>
-  <meta name="description" content="分片集的架构说明     名称 解释 作用    Shard 分片集存储实例 用于存储实际的数据块，实际生产环境中一个shard server角色可由几台机器组个一个replica set承担，防止单机节点故障   config server 分片集配置器 存储了整个ClusterMetadata，其中包括 chunk信息   mongos 分片集路由器 客户端由此接入，且让整个集群看上去像">
+  <title>Mysql遇到的bug1 | TinnerのBlog</title>
+  <meta name="description" content="问题背景实际开发过程中遇到一个sql报警： 1select * from order_info where uid &#x3D; 5837661 order by id asc limit 1  排查执行show create table order_info 发现这个表是有加索引的 12345678CREATE TABLE &#96;order_info&#96; (  &#96;id&#96; bigint(20) unsigned">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mongo分片集">
-<meta property="og:url" content="https://utinner.gitee.io/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/index.html">
+<meta property="og:title" content="Mysql遇到的bug1">
+<meta property="og:url" content="https://utinner.gitee.io/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/index.html">
 <meta property="og:site_name" content="代码乐园">
-<meta property="og:description" content="分片集的架构说明     名称 解释 作用    Shard 分片集存储实例 用于存储实际的数据块，实际生产环境中一个shard server角色可由几台机器组个一个replica set承担，防止单机节点故障   config server 分片集配置器 存储了整个ClusterMetadata，其中包括 chunk信息   mongos 分片集路由器 客户端由此接入，且让整个集群看上去像">
+<meta property="og:description" content="问题背景实际开发过程中遇到一个sql报警： 1select * from order_info where uid &#x3D; 5837661 order by id asc limit 1  排查执行show create table order_info 发现这个表是有加索引的 12345678CREATE TABLE &#96;order_info&#96; (  &#96;id&#96; bigint(20) unsigned">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://utinner.gitee.io/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/sharding.png">
-<meta property="article:published_time" content="2020-12-18T08:21:51.000Z">
-<meta property="article:modified_time" content="2021-12-06T09:23:00.860Z">
+<meta property="og:image" content="https://utinner.gitee.io/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/1.png">
+<meta property="article:published_time" content="2023-03-28T06:46:39.000Z">
+<meta property="article:modified_time" content="2023-03-28T06:56:29.584Z">
 <meta property="article:author" content="JinPing">
-<meta property="article:tag" content="MongoDB">
+<meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://utinner.gitee.io/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/sharding.png">
+<meta name="twitter:image" content="https://utinner.gitee.io/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/1.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://utinner.gitee.io/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/index.html">
+  <link rel="canonical" href="https://utinner.gitee.io/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/index.html">
   
     <link rel="alternate" href="/atom.xml" title="代码乐园" type="application/atom+xml">
   
@@ -322,14 +322,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-mongo分片集" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-Mysql遇到的bug1" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      mongo分片集
+      Mysql遇到的bug1
     </h1>
   
 
@@ -337,8 +337,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/" class="article-date">
-	  <time datetime="2020-12-18T08:21:51.000Z" itemprop="datePublished">2020-12-18</time>
+	<a href="/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/" class="article-date">
+	  <time datetime="2023-03-28T06:46:39.000Z" itemprop="datePublished">2023-03-28</time>
 	</a>
 </span>
         
@@ -350,7 +350,7 @@
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/MongoDB/" rel="tag">MongoDB</a>
+	<a class="article-tag-link-link" href="/tags/Mysql/" rel="tag">Mysql</a>
   </span>
 
 
@@ -365,128 +365,58 @@
 
 	<span class="article-read hidden-xs">
     	<i class="icon icon-eye-fill" aria-hidden="true"></i>
-    	<span id="/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/" class="leancloud_visitors"  data-flag-title="mongo分片集">0</span>
+    	<span id="/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/" class="leancloud_visitors"  data-flag-title="Mysql遇到的bug1">0</span>
     </span>
 
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.5k(字)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3(分)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span>
 	
 
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <meta name="referrer" content="no-referrer">
+        <h1 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h1><p>实际开发过程中遇到一个sql报警：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> order_info <span class="keyword">where</span> uid = <span class="number">5837661</span> <span class="keyword">order</span> <span class="keyword">by</span> id <span class="keyword">asc</span> <span class="keyword">limit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
+<h1 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h1><p>执行<code>show create table order_info</code> 发现这个表是有加索引的</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `order_info` (</span><br><span class="line">  `id` bigint(<span class="number">20</span>) unsigned <span class="literal">NOT</span> NULL AUTO_INCREMENT,</span><br><span class="line">  `uid` int(<span class="number">11</span>) unsigned,</span><br><span class="line">  `order_status` tinyint(<span class="number">3</span>) DEFAULT NULL,</span><br><span class="line">  ... 省略其它字段和索引</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `idx_uid_stat` (`uid`,`order_status`),</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8</span><br></pre></td></tr></table></figure>
 
-<h2 id="分片集的架构说明"><a href="#分片集的架构说明" class="headerlink" title="分片集的架构说明"></a>分片集的架构说明</h2><img src="/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/sharding.png" class title="分片集">
+<p>理论上执行上述 SQL 会命中 idx_uid_stat 这个索引，但实际执行 explain 查看</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">explain</span> <span class="keyword">select</span> * <span class="keyword">from</span> order_info <span class="keyword">where</span> uid = <span class="number">5837661</span> <span class="keyword">order</span> <span class="keyword">by</span> id <span class="keyword">asc</span> <span class="keyword">limit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
-<table>
-<thead>
-<tr>
-<th align="center">名称</th>
-<th align="center">解释</th>
-<th align="left">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Shard</td>
-<td align="center">分片集存储实例</td>
-<td align="left">用于存储实际的数据块，实际生产环境中一个<code>shard server</code>角色可由几台机器组个一个<code>replica set</code>承担，防止单机节点故障</td>
-</tr>
-<tr>
-<td align="center">config server</td>
-<td align="center">分片集配置器</td>
-<td align="left">存储了整个ClusterMetadata，其中包括 chunk信息</td>
-</tr>
-<tr>
-<td align="center">mongos</td>
-<td align="center">分片集路由器</td>
-<td align="left">客户端由此接入，且让整个集群看上去像单一数据库，前端应用可以透明使用</td>
-</tr>
-</tbody></table>
-<h2 id="为什么要使用分片集？"><a href="#为什么要使用分片集？" class="headerlink" title="为什么要使用分片集？"></a>为什么要使用分片集？</h2><p>一般有如下几个原因：</p>
-<ul>
-<li>数据容量日益增大，副本集维护吃力</li>
-<li>增加集群的吞吐量</li>
-<li>单库数据超过10TB</li>
-<li>地理容灾</li>
-</ul>
-<h2 id="使用分片集的优劣势"><a href="#使用分片集的优劣势" class="headerlink" title="使用分片集的优劣势"></a>使用分片集的优劣势</h2><table>
-<thead>
-<tr>
-<th align="left">优势</th>
-<th align="left">劣势</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1.海量数据存储有方案 <br>2.增加数据库的访问并发和集群的iops <br>3.跨机房灾备<br> 4.单库数据量有限<br></td>
-<td align="left">1.成本高昂，一个高可用的分片集至少需要3台configServer，2个shardServer，每个shardServer都是为副本集，至少2个mongos组成。<br>2.分片集本身结构复杂，运维复杂。</td>
-</tr>
-</tbody></table>
-<h2 id="1-如何进行分片？"><a href="#1-如何进行分片？" class="headerlink" title="1.如何进行分片？"></a>1.如何进行分片？</h2><h3 id="1-1-分片的基本标准"><a href="#1-1-分片的基本标准" class="headerlink" title="1.1 分片的基本标准"></a>1.1 分片的基本标准</h3><ul>
-<li>1.数据角度:数据量不超过3TB，尽可能保持在2TB一个分片</li>
-<li>2.索引角度:常用的索引必须能容纳进系统内存之中</li>
-</ul>
-<h3 id="1-2-分片的预估标准"><a href="#1-2-分片的预估标准" class="headerlink" title="1.2 分片的预估标准"></a>1.2 分片的预估标准</h3><p>A=(所需存储量/单服务可挂载容量)<br>B=(工作集大小/服务器内存<em>MongoDB可用内存率)<br>C=(并发量总数/单服务器</em>损耗系数)<br><strong>分片的数量=max(A,B,C)</strong><br>举个例子：<br>A=30TB/2TB=15<br>B=1TB/(64G<em>0.6)=27<br>C=200000/(8000</em>0.7)=36<br>分片数量=36</p>
-<h3 id="1-3-分片的基本概念"><a href="#1-3-分片的基本概念" class="headerlink" title="1.3 分片的基本概念"></a>1.3 分片的基本概念</h3><table>
-<thead>
-<tr>
-<th align="left">名称</th>
-<th align="left">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">分片键 shardkey</td>
-<td align="left">文档中的一个字段</td>
-</tr>
-<tr>
-<td align="left">文档doc</td>
-<td align="left">包含分片键的一行数据</td>
-</tr>
-<tr>
-<td align="left">块chunk</td>
-<td align="left">包含N个文档</td>
-</tr>
-<tr>
-<td align="left">分片shard</td>
-<td align="left">包含N个chunk</td>
-</tr>
-<tr>
-<td align="left">分片集群Cluster</td>
-<td align="left">包含N个分片shard</td>
-</tr>
-</tbody></table>
-<h3 id="1-4-选择合适的分片键"><a href="#1-4-选择合适的分片键" class="headerlink" title="1.4 选择合适的分片键"></a>1.4 选择合适的分片键</h3><h4 id="基于范围的分片"><a href="#基于范围的分片" class="headerlink" title="基于范围的分片"></a>基于范围的分片</h4><p>MongoDB按照片键的值的范围将数据拆分为不同的块（chunk），每个块包含了一段范围内的数据。</p>
-<ul>
-<li>优点： mongos可以快速定位请求需要的数据，并将请求转发到相应的Shard节点中。</li>
-<li>缺点： 可能导致数据在Shard节点上分布不均衡，容易造成读写热点，且不具备写分散性。</li>
-</ul>
-<p>适用场景：</p>
-<ul>
-<li>片键的值不是单调递增或单调递减、片键的值基数大且重复的频率低、需要范围查询等业务场景。</li>
-</ul>
-<h4 id="基于hash值的分片"><a href="#基于hash值的分片" class="headerlink" title="基于hash值的分片"></a>基于hash值的分片</h4><p>MongoDB计算单个字段的哈希值作为索引值，并以哈希值的范围将数据拆分为不同的块。</p>
-<ul>
-<li>优点：可以将数据更加均衡地分布在各Shard节点中，具备写分散性。</li>
-<li>缺点：不适合进行范围查询，进行范围查询时，需要将读请求分发到所有的Shard节点。</li>
-</ul>
-<p>适用场景：</p>
-<ul>
-<li>片键的值存在单调递增或递减、片键的值基数大且重复的频率低、需要写入的数据随机分发、数据读取随机性较大等业务场景。</li>
-</ul>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
-<li>在4.0之前片键一经设置，不可修改，不可删除。在4.2之后可以对分片完的Collection进行修改分片键</li>
-<li>执行了数据分片操作后，均衡器会对满足条件的数据进行拆分，这将占用实例的资源，请在业务低峰期操作。</li>
-</ul>
-<h3 id="1-5-分片操作"><a href="#1-5-分片操作" class="headerlink" title="1.5 分片操作"></a>1.5 分片操作</h3><p>1&gt;确认使用的实例为分片集群（执行<code>sh.status()</code>）<br>2&gt;切换数据库（执行 <code>use 数据库名</code>&gt;<br>3&gt;允许此库进行分片(执行 sh.enableSharding(“数据库名”))<br>4&gt;创建或使用已有的collection<br>5&gt;对collection中已创建索引的字段进行分片</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sh</span>.shardCollection(<span class="string">&quot;数据库名.表名&quot;</span>,&#123;<span class="string">&quot;_id&quot;</span>:<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
-<p>6.经过一段时间查看一下数据在每个节点的分布</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stats<span class="comment">()</span></span><br></pre></td></tr></table></figure>
+<p>可以看到它的 possible_keys（此 SQL 可能涉及到的索引） 是 <code>idx_uid_stat</code>，但实际上（key）用的却是全表扫描</p>
+<img src="/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/1.png" class width="1">
+
+<p>我们知道 MySQL 是基于成本来选择是基于全表扫描还是选择某个索引来执行最终的执行计划的，所以看起来是全表扫描的成本小于基于 idx_uid_stat 索引执行的成本，不过我的第一感觉很奇怪，这条 SQL 虽然是回表，但它的 limit 是 1，也就是说只选择了满足 uid = 5837661 中的其中一条语句，就算回表也只回一条记录，这种成本几乎可以忽略不计，优化器怎么会选择全表扫描呢。</p>
+<p>为了查看 MySQL 优化器为啥选择了全表扫描，我打开了 optimizer_trace 来一探究竟</p>
+<blockquote>
+<p>在MySQL 5.6 及之后的版本中，我们可以使用 optimizer trace 功能查看优化器生成执行计划的整个过程</p>
+</blockquote>
+<h3 id="使用-optimizer-trace-的具体过程如下"><a href="#使用-optimizer-trace-的具体过程如下" class="headerlink" title="使用 optimizer_trace 的具体过程如下"></a>使用 optimizer_trace 的具体过程如下</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> optimizer_trace=&quot;enabled=on&quot;;        // 打开 optimizer_trace</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> order_info <span class="keyword">where</span> uid = <span class="number">5837661</span> <span class="keyword">order</span> <span class="keyword">by</span> id <span class="keyword">asc</span> <span class="keyword">limit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> information_schema.OPTIMIZER_TRACE;    // 查看执行计划表</span><br><span class="line"><span class="keyword">SET</span> optimizer_trace=&quot;enabled=off&quot;; // 关闭 optimizer_trace</span><br></pre></td></tr></table></figure>
+
+<p>MySQL 优化器首先会计算出全表扫描的成本，然后选出该 SQL 可能涉及到的所有索引并且计算索引的成本，然后选出所有成本最小的那个来执行，来看下 optimizer trace 给出的关键信息</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;rows_estimation&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;table&quot;</span>: <span class="string">&quot;`rebate_order_info`&quot;</span>,</span><br><span class="line">      <span class="string">&quot;range_analysis&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;table_scan&quot;</span>: &#123;</span><br><span class="line">          <span class="string">&quot;rows&quot;</span>: 21155996,</span><br><span class="line">          <span class="string">&quot;cost&quot;</span>: 4.45e6    <span class="string">//</span> 全表扫描成本</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">...</span></span><br><span class="line">      <span class="string">&quot;analyzing_range_alternatives&quot;</span>: &#123;</span><br><span class="line">          <span class="string">&quot;range_scan_alternatives&quot;</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="string">&quot;index&quot;</span>: <span class="string">&quot;idx_uid_stat&quot;</span>,</span><br><span class="line">            <span class="string">&quot;ranges&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;5837661 &lt;= uid &lt;= 5837661&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;index_dives_for_eq_ranges&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="string">&quot;rowid_ordered&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">&quot;using_mrr&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">&quot;index_only&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="string">&quot;rows&quot;</span>: 255918,</span><br><span class="line">            <span class="string">&quot;cost&quot;</span>: 307103,            <span class="string">//</span> 使用idx_uid_stat索引的成本</span><br><span class="line">            <span class="string">&quot;chosen&quot;</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">          ],</span><br><span class="line">       <span class="string">&quot;chosen_range_access_summary&quot;</span>: &#123;    <span class="string">//</span> 经过上面的各个成本比较后选择的最终结果</span><br><span class="line">         <span class="string">&quot;range_access_plan&quot;</span>: &#123;</span><br><span class="line">             <span class="string">&quot;type&quot;</span>: <span class="string">&quot;range_scan&quot;</span>,</span><br><span class="line">             <span class="string">&quot;index&quot;</span>: <span class="string">&quot;idx_uid_stat&quot;</span>,  <span class="string">//</span> 可以看到最终选择了idx_uid_stat这个索引来执行</span><br><span class="line">             <span class="string">&quot;rows&quot;</span>: 255918,</span><br><span class="line">             <span class="string">&quot;ranges&quot;</span>: [</span><br><span class="line">             <span class="string">&quot;58376617 &lt;= uid &lt;= 58376617&quot;</span></span><br><span class="line">             ]</span><br><span class="line">         &#125;,</span><br><span class="line">         <span class="string">&quot;rows_for_plan&quot;</span>: 255918,</span><br><span class="line">         <span class="string">&quot;cost_for_plan&quot;</span>: 307103,</span><br><span class="line">         <span class="string">&quot;chosen&quot;</span>: <span class="literal">true</span></span><br><span class="line">         &#125;</span><br><span class="line">         &#125;  </span><br><span class="line">    <span class="string">...</span></span><br></pre></td></tr></table></figure>
+<p>可以看到全表扫描的成本是 4.45e6，而选择索引 idx_uid_stat 的成本是 307103，远小于全表扫描的成本，而且从最终的选择结果（chosen_range_access_summary）来看，确实也是选择了 idx_uid_stat 这个索引，但为啥从 explain 看到的选择是执行 PRIMARY 也就是全表扫描呢，难道这个执行计划有误？</p>
+<p>仔细再看了一下这个执行计划，果然发现了猫腻，执行计划中有一个 reconsidering_access_paths_for_index_ordering</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;reconsidering_access_paths_for_index_ordering&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;clause&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ORDER BY&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;index_order_summary&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;table&quot;</span><span class="punctuation">:</span> <span class="string">&quot;`rebate_order_info`&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;index_provides_order&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;order_direction&quot;</span><span class="punctuation">:</span> <span class="string">&quot;asc&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;PRIMARY&quot;</span><span class="punctuation">,</span>    <span class="comment">// 可以看到选择了主键索引</span></span><br><span class="line">      <span class="attr">&quot;plan_changed&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;access_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;index_scan&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个选择表示由于排序的原因再进行了一次索引选择优化，由于我们的 SQL 使用了 id 排序（order by id asc limit 1）,优化器最终选择了 PRIMARY 也就是全表扫描来执行，也就是说这个选择会无视之前的基于索引成本的选择，为什么会有这样的一个选项呢，主要原因如下：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The <span class="keyword">short</span> explanation is that <span class="keyword">the</span> optimizer thinks — <span class="keyword">or</span> should I say hopes — that scanning <span class="keyword">the</span> <span class="keyword">whole</span> table (which is already sorted <span class="keyword">by</span> <span class="keyword">the</span> id field) will find <span class="keyword">the</span> limited rows quick enough, <span class="keyword">and</span> that this will avoid <span class="keyword">a</span> <span class="built_in">sort</span> operation. So <span class="keyword">by</span> trying <span class="built_in">to</span> avoid <span class="keyword">a</span> <span class="built_in">sort</span>, <span class="keyword">the</span> optimizer <span class="keyword">ends</span>-up losing <span class="built_in">time</span> scanning <span class="keyword">the</span> table.</span><br></pre></td></tr></table></figure>
+
+<p>从这段解释可以看出主要原因是由于我们使用了 order by id asc 这种基于 id 的排序写法，优化器认为排序是个昂贵的操作，所以为了避免排序，并且它认为 limit n 的 n 如果很小的话即使使用全表扫描也能很快执行完，所以它选择了全表扫描，也就避免了 id 的排序（全表扫描其实就是基于 id 主键的聚簇索引的扫描，本身就是基于 id 排好序的）</p>
+<p>如果这个选择是对的那也罢了，然而实际上这个优化却是有 bug 的！实际选择 idx_uid_stat 执行会快得多（只要 28 ms）！网上有不少人反馈这个问题，而且出现这个问题基本只与 SQL 中出现 <code>order by id asc limit n</code> 这种写法有关，如果 n 比较小很大概率会走全表扫描，如果 n 比较大则会选择正确的索引。</p>
+<p>这个 bug 最早追溯到 2014 年，不少人都呼吁官方及时修正这个bug，可能是实现比较困难，直到 <code>MySQL 5.7，8.0</code> 都还没解决，所以在官方修复前我们要尽量避免这种写法，如果一定要用这种写法，怎么办呢</p>
+<h1 id="两种方案"><a href="#两种方案" class="headerlink" title="两种方案"></a>两种方案</h1><h3 id="1-使用-force-index-来强制使用指定的索引"><a href="#1-使用-force-index-来强制使用指定的索引" class="headerlink" title="1.使用 force index 来强制使用指定的索引"></a>1.使用 force index 来强制使用指定的索引</h3><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> order_info <span class="keyword">force</span> <span class="keyword">index</span>(idx_uid_stat) <span class="keyword">where</span> uid = <span class="number">5837661</span> <span class="keyword">order</span> <span class="keyword">by</span> id <span class="keyword">asc</span> <span class="keyword">limit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-order-by-id-0-方案"><a href="#2-使用-order-by-id-0-方案" class="headerlink" title="2.使用 order by (id+0) 方案"></a>2.使用 order by (id+0) 方案</h3><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> order_info <span class="keyword">where</span> uid = <span class="number">5837661</span> <span class="keyword">order</span> <span class="keyword">by</span> (id+<span class="number">0</span>) <span class="keyword">asc</span> <span class="keyword">limit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方案也可以让优化器选择正确的索引，更推荐！为什么这个 trick 可以呢，因为此 SQL 虽然是按 id 排序的，但在 id 上作了加法这样耗时的操作(虽然只是加个无用的 0，但足以骗过优化器)，优化器认为此时基于全表扫描会更耗性能，于是会选择基于成本大小的方式来选择索引</p>
+
       
     </div>
     <div class="article-footer">
@@ -495,7 +425,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://utinner.gitee.io/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/" title="mongo分片集" target="_blank" rel="external">https://utinner.gitee.io/2020/12/18/mongo分片集/</a>
+      <a href="https://utinner.gitee.io/2023/03/28/Mysql%E9%81%87%E5%88%B0%E7%9A%84bug1/" title="Mysql遇到的bug1" target="_blank" rel="external">https://utinner.gitee.io/2023/03/28/Mysql遇到的bug1/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -539,13 +469,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2020/12/24/Java%E4%B8%AD%E7%9A%84hashcode%E5%92%8Cequals/" title="Java中的hashcode和equals"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/12/18/mongo%E6%9C%8D%E5%8A%A1/" title="mongo服务"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2021/11/10/%E5%AE%8C%E5%BD%A2%E5%A1%AB%E7%A9%BA/" title="完形填空"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
