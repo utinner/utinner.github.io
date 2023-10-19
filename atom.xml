@@ -6,7 +6,7 @@
   <link href="https://utinner.gitee.io/atom.xml" rel="self"/>
   
   <link href="https://utinner.gitee.io/"/>
-  <updated>2023-03-28T06:56:29.584Z</updated>
+  <updated>2023-10-19T10:58:50.965Z</updated>
   <id>https://utinner.gitee.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>颓废生活的记录</title>
+    <link href="https://utinner.gitee.io/2023/10/19/%E9%A2%93%E5%BA%9F%E7%94%9F%E6%B4%BB%E7%9A%84%E8%AE%B0%E5%BD%95/"/>
+    <id>https://utinner.gitee.io/2023/10/19/%E9%A2%93%E5%BA%9F%E7%94%9F%E6%B4%BB%E7%9A%84%E8%AE%B0%E5%BD%95/</id>
+    <published>2023-10-19T09:50:09.000Z</published>
+    <updated>2023-10-19T10:58:50.965Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="2021年至今的颓废生活"><a href="#2021年至今的颓废生活" class="headerlink" title="2021年至今的颓废生活"></a>2021年至今的颓废生活</h1><h2 id="1-考研"><a href="#1-考研" class="headerlink" title="1.考研"></a>1.考研</h2><p>2021年9月份开始准备考研的我，还是个刚毕业三年的有上进心的北漂<br>考研原因：</p><ul><li>下班之后太闲了</li><li>为以后铺路</li><li>提升身价</li><li>提升视野</li></ul><p>一开始选择的方向是MEM，后来发现门槛比较高，所以选择了MBA，买了很多教材，经过2个多月的准备，12.25日圣诞节，考完之后，分手，等结果。当天晚上就开始玩了《大话西游2》</p><p>来年2月份（2022年），公布考试成绩</p><img src="/2023/10/19/%E9%A2%93%E5%BA%9F%E7%94%9F%E6%B4%BB%E7%9A%84%E8%AE%B0%E5%BD%95/1.png" class title="计算机网络"><h2 id="2022年"><a href="#2022年" class="headerlink" title="2022年"></a>2022年</h2><p>还是觉得比较闲，又觉得早早准备二战没必要，又报名了《国家一级造价工程师》，报班费用3800，一共四门，先想着考一门，11月份考试，但是落榜了</p><img src="/2023/10/19/%E9%A2%93%E5%BA%9F%E7%94%9F%E6%B4%BB%E7%9A%84%E8%AE%B0%E5%BD%95/2.png" class title="计算机网络"><p>紧接着就迎来了疫情的全面开放，拿着阳了的借口，没有去参加二战，自此一直玩着游戏，直到2023年10月份</p><h2 id="2023年"><a href="#2023年" class="headerlink" title="2023年"></a>2023年</h2><p>公司9月底搬家，10月份宣布永辉北京产研部门陆续解散，但是自己还是不慌不忙，也是比较迷茫吧，还没去准备面试，想要拿到赔偿之后回老家待一段时间。。。。。。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;2021年至今的颓废生活&quot;&gt;&lt;a href=&quot;#2021年至今的颓废生活&quot; class=&quot;headerlink&quot; title=&quot;2021年至今的颓废生活&quot;&gt;&lt;/a&gt;2021年至今的颓废生活&lt;/h1&gt;&lt;h2 id=&quot;1-考研&quot;&gt;&lt;a href=&quot;#1-考研&quot; cla</summary>
+      
+    
+    
+    
+    
+    <category term="生活" scheme="https://utinner.gitee.io/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>Mysql遇到的bug1</title>
@@ -522,33 +544,6 @@ HTTP请求都是明文传输的，所谓的明文指的是没有经过加密的�
     
     
     <category term="Java基础" scheme="https://utinner.gitee.io/tags/Java%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mongo分片集</title>
-    <link href="https://utinner.gitee.io/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/"/>
-    <id>https://utinner.gitee.io/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/</id>
-    <published>2020-12-18T08:21:51.000Z</published>
-    <updated>2021-12-06T09:23:00.860Z</updated>
-    
-    <content type="html"><![CDATA[<meta name="referrer" content="no-referrer"><h2 id="分片集的架构说明"><a href="#分片集的架构说明" class="headerlink" title="分片集的架构说明"></a>分片集的架构说明</h2><img src="/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/sharding.png" class title="分片集"><table><thead><tr><th align="center">名称</th><th align="center">解释</th><th align="left">作用</th></tr></thead><tbody><tr><td align="center">Shard</td><td align="center">分片集存储实例</td><td align="left">用于存储实际的数据块，实际生产环境中一个<code>shard server</code>角色可由几台机器组个一个<code>replica set</code>承担，防止单机节点故障</td></tr><tr><td align="center">config server</td><td align="center">分片集配置器</td><td align="left">存储了整个ClusterMetadata，其中包括 chunk信息</td></tr><tr><td align="center">mongos</td><td align="center">分片集路由器</td><td align="left">客户端由此接入，且让整个集群看上去像单一数据库，前端应用可以透明使用</td></tr></tbody></table><h2 id="为什么要使用分片集？"><a href="#为什么要使用分片集？" class="headerlink" title="为什么要使用分片集？"></a>为什么要使用分片集？</h2><p>一般有如下几个原因：</p><ul><li>数据容量日益增大，副本集维护吃力</li><li>增加集群的吞吐量</li><li>单库数据超过10TB</li><li>地理容灾</li></ul><h2 id="使用分片集的优劣势"><a href="#使用分片集的优劣势" class="headerlink" title="使用分片集的优劣势"></a>使用分片集的优劣势</h2><table><thead><tr><th align="left">优势</th><th align="left">劣势</th></tr></thead><tbody><tr><td align="left">1.海量数据存储有方案 <br>2.增加数据库的访问并发和集群的iops <br>3.跨机房灾备<br> 4.单库数据量有限<br></td><td align="left">1.成本高昂，一个高可用的分片集至少需要3台configServer，2个shardServer，每个shardServer都是为副本集，至少2个mongos组成。<br>2.分片集本身结构复杂，运维复杂。</td></tr></tbody></table><h2 id="1-如何进行分片？"><a href="#1-如何进行分片？" class="headerlink" title="1.如何进行分片？"></a>1.如何进行分片？</h2><h3 id="1-1-分片的基本标准"><a href="#1-1-分片的基本标准" class="headerlink" title="1.1 分片的基本标准"></a>1.1 分片的基本标准</h3><ul><li>1.数据角度:数据量不超过3TB，尽可能保持在2TB一个分片</li><li>2.索引角度:常用的索引必须能容纳进系统内存之中</li></ul><h3 id="1-2-分片的预估标准"><a href="#1-2-分片的预估标准" class="headerlink" title="1.2 分片的预估标准"></a>1.2 分片的预估标准</h3><p>A=(所需存储量/单服务可挂载容量)<br>B=(工作集大小/服务器内存<em>MongoDB可用内存率)<br>C=(并发量总数/单服务器</em>损耗系数)<br><strong>分片的数量=max(A,B,C)</strong><br>举个例子：<br>A=30TB/2TB=15<br>B=1TB/(64G<em>0.6)=27<br>C=200000/(8000</em>0.7)=36<br>分片数量=36</p><h3 id="1-3-分片的基本概念"><a href="#1-3-分片的基本概念" class="headerlink" title="1.3 分片的基本概念"></a>1.3 分片的基本概念</h3><table><thead><tr><th align="left">名称</th><th align="left">解释</th></tr></thead><tbody><tr><td align="left">分片键 shardkey</td><td align="left">文档中的一个字段</td></tr><tr><td align="left">文档doc</td><td align="left">包含分片键的一行数据</td></tr><tr><td align="left">块chunk</td><td align="left">包含N个文档</td></tr><tr><td align="left">分片shard</td><td align="left">包含N个chunk</td></tr><tr><td align="left">分片集群Cluster</td><td align="left">包含N个分片shard</td></tr></tbody></table><h3 id="1-4-选择合适的分片键"><a href="#1-4-选择合适的分片键" class="headerlink" title="1.4 选择合适的分片键"></a>1.4 选择合适的分片键</h3><h4 id="基于范围的分片"><a href="#基于范围的分片" class="headerlink" title="基于范围的分片"></a>基于范围的分片</h4><p>MongoDB按照片键的值的范围将数据拆分为不同的块（chunk），每个块包含了一段范围内的数据。</p><ul><li>优点： mongos可以快速定位请求需要的数据，并将请求转发到相应的Shard节点中。</li><li>缺点： 可能导致数据在Shard节点上分布不均衡，容易造成读写热点，且不具备写分散性。</li></ul><p>适用场景：</p><ul><li>片键的值不是单调递增或单调递减、片键的值基数大且重复的频率低、需要范围查询等业务场景。</li></ul><h4 id="基于hash值的分片"><a href="#基于hash值的分片" class="headerlink" title="基于hash值的分片"></a>基于hash值的分片</h4><p>MongoDB计算单个字段的哈希值作为索引值，并以哈希值的范围将数据拆分为不同的块。</p><ul><li>优点：可以将数据更加均衡地分布在各Shard节点中，具备写分散性。</li><li>缺点：不适合进行范围查询，进行范围查询时，需要将读请求分发到所有的Shard节点。</li></ul><p>适用场景：</p><ul><li>片键的值存在单调递增或递减、片键的值基数大且重复的频率低、需要写入的数据随机分发、数据读取随机性较大等业务场景。</li></ul><h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul><li>在4.0之前片键一经设置，不可修改，不可删除。在4.2之后可以对分片完的Collection进行修改分片键</li><li>执行了数据分片操作后，均衡器会对满足条件的数据进行拆分，这将占用实例的资源，请在业务低峰期操作。</li></ul><h3 id="1-5-分片操作"><a href="#1-5-分片操作" class="headerlink" title="1.5 分片操作"></a>1.5 分片操作</h3><p>1&gt;确认使用的实例为分片集群（执行<code>sh.status()</code>）<br>2&gt;切换数据库（执行 <code>use 数据库名</code>&gt;<br>3&gt;允许此库进行分片(执行 sh.enableSharding(“数据库名”))<br>4&gt;创建或使用已有的collection<br>5&gt;对collection中已创建索引的字段进行分片</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sh</span>.shardCollection(<span class="string">&quot;数据库名.表名&quot;</span>,&#123;<span class="string">&quot;_id&quot;</span>:<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure><p>6.经过一段时间查看一下数据在每个节点的分布</p><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stats<span class="comment">()</span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
-
-
-&lt;h2 id=&quot;分片集的架构说明&quot;&gt;&lt;a href=&quot;#分片集的架构说明&quot; class=&quot;headerlink&quot; title=&quot;分片集的架构说明&quot;&gt;&lt;/a&gt;分片集的架构说明&lt;/h2&gt;&lt;i</summary>
-      
-    
-    
-    
-    <category term="数据库" scheme="https://utinner.gitee.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="MongoDB" scheme="https://utinner.gitee.io/tags/MongoDB/"/>
     
   </entry>
   
