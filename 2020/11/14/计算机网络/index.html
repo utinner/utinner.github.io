@@ -17,28 +17,28 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>计算机网络 | TinnerのBlog</title>
+  <title>计算机网络 | JinpingのBlog</title>
   <meta name="description" content="一.OSI七层协议   1.物理层  机器A往机器B发送比特流，机器B要保证能收到比特流，这就是物理层要做的事情。物理层主要定义了网络设备的标准，如：网线的类型、光纤的接口类型。网卡就是工作在这一层里面的，这一层主要负责数模、模数的转换（比特流转化为电流，电流再转化为比特流） 2.数据链路层  在传输比特流的过程中，会产生错传、数据传输不完整的可能，因此数据链路层定义了如何格式化数据以进行传输">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络">
-<meta property="og:url" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:url" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="代码乐园">
 <meta property="og:description" content="一.OSI七层协议   1.物理层  机器A往机器B发送比特流，机器B要保证能收到比特流，这就是物理层要做的事情。物理层主要定义了网络设备的标准，如：网线的类型、光纤的接口类型。网卡就是工作在这一层里面的，这一层主要负责数模、模数的转换（比特流转化为电流，电流再转化为比特流） 2.数据链路层  在传输比特流的过程中，会产生错传、数据传输不完整的可能，因此数据链路层定义了如何格式化数据以进行传输">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E4%B8%83%E5%B1%82.jpg">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E6%8A%A5%E6%96%87%E5%A4%B4.jpg">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E6%8A%A5%E6%96%87%E5%A4%B41.jpg">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E6%8A%A5%E6%96%87%E5%A4%B42.jpg">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E5%92%8Cudp.jpeg">
+<meta property="og:image" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E4%B8%83%E5%B1%82.jpg">
+<meta property="og:image" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E6%8A%A5%E6%96%87%E5%A4%B4.jpg">
+<meta property="og:image" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E6%8A%A5%E6%96%87%E5%A4%B41.jpg">
+<meta property="og:image" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E6%8A%A5%E6%96%87%E5%A4%B42.jpg">
+<meta property="og:image" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/tcp%E5%92%8Cudp.jpeg">
 <meta property="article:published_time" content="2020-11-14T14:30:17.000Z">
 <meta property="article:modified_time" content="2021-12-06T09:23:00.923Z">
 <meta property="article:author" content="JinPing">
 <meta property="article:tag" content="基础知识">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E4%B8%83%E5%B1%82.jpg">
+<meta name="twitter:image" content="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E4%B8%83%E5%B1%82.jpg">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+  <link rel="canonical" href="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
   
     <link rel="alternate" href="/atom.xml" title="代码乐园" type="application/atom+xml">
   
@@ -65,8 +65,8 @@
         <a id="avatar" href="https://github.com/utinner" target="_blank">
           <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
         </a>
-        <h2 id="name" class="hidden-xs hidden-sm">Stevion</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">CVStevion</h3>
+        <h2 id="name" class="hidden-xs hidden-sm">Jinping</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
         <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
       </div>
       
@@ -547,7 +547,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://utinner.gitee.io/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络" target="_blank" rel="external">https://utinner.gitee.io/2020/11/14/计算机网络/</a>
+      <a href="https://jinping.fun/2020/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络" target="_blank" rel="external">https://jinping.fun/2020/11/14/计算机网络/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -566,8 +566,8 @@
         </a>
       </div>
       <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Stevion</span><small class="ml-1x">CVStevion</small></a></h3>
-        <div>个人简介。</div>
+        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Jinping</span><small class="ml-1x"></small></a></h3>
+        <div>个人简介不写</div>
       </div>
     </figure>
   </div>
@@ -676,6 +676,8 @@
 
     <div class="copyright">
     	
+        &copy; 2023 JinPing
+        
         <div class="publishby">
         	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
         </div>

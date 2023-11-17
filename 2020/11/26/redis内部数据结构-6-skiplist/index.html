@@ -17,32 +17,32 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>redis内部数据结构(6)-skiplist | TinnerのBlog</title>
+  <title>redis内部数据结构(6)-skiplist | JinpingのBlog</title>
   <meta name="description" content="Redis里面使用skiplist是为了实现&#96;sorted set&#96;这种对外的数据结构。sorted set提供的操作非常丰富，可以满足非常多的应用场景。  我们将大体分成三个部分进行介绍：  介绍经典的skiplist数据结构，并进行简单的算法分析。这一部分的介绍，与Redis没有直接关系。我会尝试尽量使用通俗易懂的语言进行描述。 讨论Redis里的skiplist的具体实现。为了支持sort">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis内部数据结构(6)-skiplist">
-<meta property="og:url" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/index.html">
+<meta property="og:url" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/index.html">
 <meta property="og:site_name" content="代码乐园">
 <meta property="og:description" content="Redis里面使用skiplist是为了实现&#96;sorted set&#96;这种对外的数据结构。sorted set提供的操作非常丰富，可以满足非常多的应用场景。  我们将大体分成三个部分进行介绍：  介绍经典的skiplist数据结构，并进行简单的算法分析。这一部分的介绍，与Redis没有直接关系。我会尝试尽量使用通俗易懂的语言进行描述。 讨论Redis里的skiplist的具体实现。为了支持sort">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/sorted_linked_list.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skip2node_linked_list.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/search_path_on_skip2node_list.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skip2node_level3_linked_list.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skiplist_insertions.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/search_path_on_skiplist.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skiplist_avg_level.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skiplist_backwards.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/sorted_set_cmd_examples.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/redis_skiplist_example.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/sorted_linked_list.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skip2node_linked_list.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/search_path_on_skip2node_list.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skip2node_level3_linked_list.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skiplist_insertions.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/search_path_on_skiplist.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skiplist_avg_level.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/skiplist_backwards.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/sorted_set_cmd_examples.png">
+<meta property="og:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/redis_skiplist_example.png">
 <meta property="article:published_time" content="2020-11-26T09:01:25.000Z">
 <meta property="article:modified_time" content="2021-12-06T09:23:00.876Z">
 <meta property="article:author" content="JinPing">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/sorted_linked_list.png">
+<meta name="twitter:image" content="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/sorted_linked_list.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/index.html">
+  <link rel="canonical" href="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/index.html">
   
     <link rel="alternate" href="/atom.xml" title="代码乐园" type="application/atom+xml">
   
@@ -69,8 +69,8 @@
         <a id="avatar" href="https://github.com/utinner" target="_blank">
           <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
         </a>
-        <h2 id="name" class="hidden-xs hidden-sm">Stevion</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">CVStevion</h3>
+        <h2 id="name" class="hidden-xs hidden-sm">Jinping</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
         <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
       </div>
       
@@ -609,7 +609,7 @@ Redis里面使用skiplist是为了实现`sorted set`这种对外的数据结构�
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://utinner.gitee.io/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/" title="redis内部数据结构(6)-skiplist" target="_blank" rel="external">https://utinner.gitee.io/2020/11/26/redis内部数据结构-6-skiplist/</a>
+      <a href="https://jinping.fun/2020/11/26/redis%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-6-skiplist/" title="redis内部数据结构(6)-skiplist" target="_blank" rel="external">https://jinping.fun/2020/11/26/redis内部数据结构-6-skiplist/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -628,8 +628,8 @@ Redis里面使用skiplist是为了实现`sorted set`这种对外的数据结构�
         </a>
       </div>
       <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Stevion</span><small class="ml-1x">CVStevion</small></a></h3>
-        <div>个人简介。</div>
+        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Jinping</span><small class="ml-1x"></small></a></h3>
+        <div>个人简介不写</div>
       </div>
     </figure>
   </div>
@@ -738,6 +738,8 @@ Redis里面使用skiplist是为了实现`sorted set`这种对外的数据结构�
 
     <div class="copyright">
     	
+        &copy; 2023 JinPing
+        
         <div class="publishby">
         	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
         </div>

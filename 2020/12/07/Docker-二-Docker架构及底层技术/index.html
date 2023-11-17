@@ -17,24 +17,24 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Docker(二)Docker架构及底层技术 | TinnerのBlog</title>
+  <title>Docker(二)Docker架构及底层技术 | JinpingのBlog</title>
   <meta name="description" content="Docker PlatformDocker提供了一个开发、打包、运行app的平台 它将app和底层infrastructure隔离开来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker(二)Docker架构及底层技术">
-<meta property="og:url" content="https://utinner.gitee.io/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:url" content="https://jinping.fun/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/index.html">
 <meta property="og:site_name" content="代码乐园">
 <meta property="og:description" content="Docker PlatformDocker提供了一个开发、打包、运行app的平台 它将app和底层infrastructure隔离开来">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://utinner.gitee.io/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/1.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/engine.png">
+<meta property="og:image" content="https://jinping.fun/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/1.png">
+<meta property="og:image" content="https://jinping.fun/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/engine.png">
 <meta property="article:published_time" content="2020-12-07T06:44:55.000Z">
 <meta property="article:modified_time" content="2021-12-06T09:23:00.673Z">
 <meta property="article:author" content="JinPing">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://utinner.gitee.io/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/1.png">
+<meta name="twitter:image" content="https://jinping.fun/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/1.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://utinner.gitee.io/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/index.html">
+  <link rel="canonical" href="https://jinping.fun/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/index.html">
   
     <link rel="alternate" href="/atom.xml" title="代码乐园" type="application/atom+xml">
   
@@ -61,8 +61,8 @@
         <a id="avatar" href="https://github.com/utinner" target="_blank">
           <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
         </a>
-        <h2 id="name" class="hidden-xs hidden-sm">Stevion</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">CVStevion</h3>
+        <h2 id="name" class="hidden-xs hidden-sm">Jinping</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
         <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
       </div>
       
@@ -409,7 +409,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://utinner.gitee.io/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/" title="Docker(二)Docker架构及底层技术" target="_blank" rel="external">https://utinner.gitee.io/2020/12/07/Docker-二-Docker架构及底层技术/</a>
+      <a href="https://jinping.fun/2020/12/07/Docker-%E4%BA%8C-Docker%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF/" title="Docker(二)Docker架构及底层技术" target="_blank" rel="external">https://jinping.fun/2020/12/07/Docker-二-Docker架构及底层技术/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -428,8 +428,8 @@
         </a>
       </div>
       <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Stevion</span><small class="ml-1x">CVStevion</small></a></h3>
-        <div>个人简介。</div>
+        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Jinping</span><small class="ml-1x"></small></a></h3>
+        <div>个人简介不写</div>
       </div>
     </figure>
   </div>
@@ -538,6 +538,8 @@
 
     <div class="copyright">
     	
+        &copy; 2023 JinPing
+        
         <div class="publishby">
         	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
         </div>

@@ -17,25 +17,25 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Mysql(二)Mysql的数据目录 | TinnerのBlog</title>
+  <title>Mysql(二)Mysql的数据目录 | JinpingのBlog</title>
   <meta name="description" content="数据库和文件系统的关系像InnoDB、MyISAM这样的存储引擎都是把数据存储在文件系统中上。当我们想读取数据的时候，这些存储引擎会从文件系统中把数据读出来返回给我们；当我们想写入数据的时候，这些存储引擎会把这些数据又写回操作系统。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql(二)Mysql的数据目录">
-<meta property="og:url" content="https://utinner.gitee.io/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/index.html">
+<meta property="og:url" content="https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/index.html">
 <meta property="og:site_name" content="代码乐园">
 <meta property="og:description" content="数据库和文件系统的关系像InnoDB、MyISAM这样的存储引擎都是把数据存储在文件系统中上。当我们想读取数据的时候，这些存储引擎会从文件系统中把数据读出来返回给我们；当我们想写入数据的时候，这些存储引擎会把这些数据又写回操作系统。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://utinner.gitee.io/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/1.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/2.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/2.png">
+<meta property="og:image" content="https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/1.png">
+<meta property="og:image" content="https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/2.png">
+<meta property="og:image" content="https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/2.png">
 <meta property="article:published_time" content="2020-12-07T15:33:43.000Z">
 <meta property="article:modified_time" content="2021-12-06T09:23:00.736Z">
 <meta property="article:author" content="JinPing">
 <meta property="article:tag" content="Mysql">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://utinner.gitee.io/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/1.png">
+<meta name="twitter:image" content="https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/1.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://utinner.gitee.io/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/index.html">
+  <link rel="canonical" href="https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/index.html">
   
     <link rel="alternate" href="/atom.xml" title="代码乐园" type="application/atom+xml">
   
@@ -62,8 +62,8 @@
         <a id="avatar" href="https://github.com/utinner" target="_blank">
           <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
         </a>
-        <h2 id="name" class="hidden-xs hidden-sm">Stevion</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">CVStevion</h3>
+        <h2 id="name" class="hidden-xs hidden-sm">Jinping</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
         <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
       </div>
       
@@ -452,7 +452,7 @@
 </ul>
 <h3 id="文件系统对数据库的影响"><a href="#文件系统对数据库的影响" class="headerlink" title="文件系统对数据库的影响"></a>文件系统对数据库的影响</h3><ul>
 <li>数据库名称和表名不得超过文件系统所允许的最大长度</li>
-<li>特殊字符的问题：比如创建‘test?’表，则生成了‘<a href="mailto:&#x74;&#101;&#115;&#x74;&#x40;&#x30;&#48;&#51;&#x66;&#x2e;&#x66;&#x72;&#x6d;">&#x74;&#101;&#115;&#x74;&#x40;&#x30;&#48;&#51;&#x66;&#x2e;&#x66;&#x72;&#x6d;</a>‘文件</li>
+<li>特殊字符的问题：比如创建‘test?’表，则生成了‘<a href="mailto:&#x74;&#101;&#115;&#116;&#x40;&#48;&#x30;&#51;&#x66;&#x2e;&#x66;&#114;&#x6d;">&#x74;&#101;&#115;&#116;&#x40;&#48;&#x30;&#51;&#x66;&#x2e;&#x66;&#114;&#x6d;</a>‘文件</li>
 <li>文件长度受文件系统最大长度限制</li>
 </ul>
 <h3 id="Mysql系统数据库简介"><a href="#Mysql系统数据库简介" class="headerlink" title="Mysql系统数据库简介"></a>Mysql系统数据库简介</h3><p>在前文看到除了我自定义的3个数据库，还有4个数据库，属于系统自带的数据库</p>
@@ -471,7 +471,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://utinner.gitee.io/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/" title="Mysql(二)Mysql的数据目录" target="_blank" rel="external">https://utinner.gitee.io/2020/12/07/Mysql-二-Mysql的数据目录/</a>
+      <a href="https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/" title="Mysql(二)Mysql的数据目录" target="_blank" rel="external">https://jinping.fun/2020/12/07/Mysql-二-Mysql的数据目录/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -490,8 +490,8 @@
         </a>
       </div>
       <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Stevion</span><small class="ml-1x">CVStevion</small></a></h3>
-        <div>个人简介。</div>
+        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Jinping</span><small class="ml-1x"></small></a></h3>
+        <div>个人简介不写</div>
       </div>
     </figure>
   </div>
@@ -600,6 +600,8 @@
 
     <div class="copyright">
     	
+        &copy; 2023 JinPing
+        
         <div class="publishby">
         	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
         </div>

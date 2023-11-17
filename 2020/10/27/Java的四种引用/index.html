@@ -17,25 +17,25 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Java的四种引用 | TinnerのBlog</title>
+  <title>Java的四种引用 | JinpingのBlog</title>
   <meta name="description" content="Java里面有四种引用类型：强、软、弱、虚   一.强引用就是我们普通的引用。作为一个垃圾来说，什么时候才会被回收呢？当一个对象实例没有任何引用指向它的时候，它就是可以被回收的。当对象被回收的时候，会调用对象的finalize方法。  最普遍的引用：Object obj &#x3D; new Object 抛出OutOfMemoryError终止程序也不会回收具有强引用的对象 通过将对象设置为null来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java的四种引用">
-<meta property="og:url" content="https://utinner.gitee.io/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/index.html">
+<meta property="og:url" content="https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/index.html">
 <meta property="og:site_name" content="代码乐园">
 <meta property="og:description" content="Java里面有四种引用类型：强、软、弱、虚   一.强引用就是我们普通的引用。作为一个垃圾来说，什么时候才会被回收呢？当一个对象实例没有任何引用指向它的时候，它就是可以被回收的。当对象被回收的时候，会调用对象的finalize方法。  最普遍的引用：Object obj &#x3D; new Object 抛出OutOfMemoryError终止程序也不会回收具有强引用的对象 通过将对象设置为null来">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://utinner.gitee.io/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/3.png">
-<meta property="og:image" content="https://utinner.gitee.io/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/1.jpg">
-<meta property="og:image" content="https://utinner.gitee.io/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/2.jpg">
+<meta property="og:image" content="https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/3.png">
+<meta property="og:image" content="https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/1.jpg">
+<meta property="og:image" content="https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/2.jpg">
 <meta property="article:published_time" content="2020-10-26T17:22:01.000Z">
 <meta property="article:modified_time" content="2021-12-06T09:23:00.725Z">
 <meta property="article:author" content="JinPing">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://utinner.gitee.io/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/3.png">
+<meta name="twitter:image" content="https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/3.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://utinner.gitee.io/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/index.html">
+  <link rel="canonical" href="https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/index.html">
   
     <link rel="alternate" href="/atom.xml" title="代码乐园" type="application/atom+xml">
   
@@ -62,8 +62,8 @@
         <a id="avatar" href="https://github.com/utinner" target="_blank">
           <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
         </a>
-        <h2 id="name" class="hidden-xs hidden-sm">Stevion</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">CVStevion</h3>
+        <h2 id="name" class="hidden-xs hidden-sm">Jinping</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
         <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
       </div>
       
@@ -447,7 +447,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://utinner.gitee.io/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/" title="Java的四种引用" target="_blank" rel="external">https://utinner.gitee.io/2020/10/27/Java的四种引用/</a>
+      <a href="https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/" title="Java的四种引用" target="_blank" rel="external">https://jinping.fun/2020/10/27/Java的四种引用/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -466,8 +466,8 @@
         </a>
       </div>
       <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Stevion</span><small class="ml-1x">CVStevion</small></a></h3>
-        <div>个人简介。</div>
+        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Jinping</span><small class="ml-1x"></small></a></h3>
+        <div>个人简介不写</div>
       </div>
     </figure>
   </div>
@@ -576,6 +576,8 @@
 
     <div class="copyright">
     	
+        &copy; 2023 JinPing
+        
         <div class="publishby">
         	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
         </div>
