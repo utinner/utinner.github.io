@@ -6,7 +6,7 @@
   <link href="https://jinping.fun/atom.xml" rel="self"/>
   
   <link href="https://jinping.fun/"/>
-  <updated>2023-11-09T02:46:13.886Z</updated>
+  <updated>2023-11-19T15:49:55.542Z</updated>
   <id>https://jinping.fun/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mysql(三)字符集和比较规则</title>
+    <link href="https://jinping.fun/2023/11/19/Mysql-%E4%B8%89-%E5%AD%97%E7%AC%A6%E9%9B%86%E5%92%8C%E6%AF%94%E8%BE%83%E8%A7%84%E5%88%99/"/>
+    <id>https://jinping.fun/2023/11/19/Mysql-%E4%B8%89-%E5%AD%97%E7%AC%A6%E9%9B%86%E5%92%8C%E6%AF%94%E8%BE%83%E8%A7%84%E5%88%99/</id>
+    <published>2023-11-19T15:14:34.000Z</published>
+    <updated>2023-11-19T15:49:55.542Z</updated>
+    
+    <content type="html"><![CDATA[<meta name="referrer" content="no-referrer"><h1 id="一、字符集和比较规则简介"><a href="#一、字符集和比较规则简介" class="headerlink" title="一、字符集和比较规则简介"></a>一、字符集和比较规则简介</h1><h2 id="字符集简介"><a href="#字符集简介" class="headerlink" title="字符集简介"></a>字符集简介</h2><p>计算机存储的是二进制数据，它存储字符串必须要建立字符串与二进制数据的映射关系</p><ul><li>编码：将字符映射成二进制数据的过程</li><li>解码：将二进制数据映射到字符串的过程</li></ul><span id="more"></span><h2 id="比较规则简介"><a href="#比较规则简介" class="headerlink" title="比较规则简介"></a>比较规则简介</h2><p>在进行两个字符串比较时，必须要确定的前提是两个比较对象的字符集必须相同，然后按照规则进行比较<br>规则：</p><ul><li>将两个大小写不同的字符全部转为大写或者小写</li><li>再比较这两个字符对应的二进制数据</li><li>同一种字符集可以有多种比较规则</li></ul><h2 id="一些重要的字符集"><a href="#一些重要的字符集" class="headerlink" title="一些重要的字符集"></a>一些重要的字符集</h2><table><thead><tr><th align="center">字符集</th><th align="center">说明</th></tr></thead><tbody><tr><td align="center">ASCII</td><td align="center">共收录128个字符，包括空格、标点符号、数字、大小写字母和一些不可见字符</td></tr><tr><td align="center">ISO 8859-1</td><td align="center">共收录256个字符，在ASCII字符集的基础上又扩充了128个西欧常用字符</td></tr><tr><td align="center">GB2312</td><td align="center">收录了汉字及拉丁字母、希腊字母等</td></tr><tr><td align="center">GBK</td><td align="center">在GB2312字符集上进行了扩充</td></tr><tr><td align="center">UTF-8</td><td align="center">几乎收录了世界各个国家使用的字符，并且还在不断扩充。采用长编码方式</td></tr></tbody></table><h1 id="二、Mysql中的字符集和比较规则"><a href="#二、Mysql中的字符集和比较规则" class="headerlink" title="二、Mysql中的字符集和比较规则"></a>二、Mysql中的字符集和比较规则</h1><h2 id="MySQL中的utf8和utf8mb4"><a href="#MySQL中的utf8和utf8mb4" class="headerlink" title="MySQL中的utf8和utf8mb4"></a>MySQL中的utf8和utf8mb4</h2><p>在MySQL中，utf8 是 <code>utf8mb3</code> 的别名，所以之后在MySQL中提到 utf8 就意味着使用1~3个字节来表示一个字符，如果大家有使用4字节编码一个字符的情况，比如存储一些emoji表情啥的，那请使用<code>utf8mb4</code> 。</p><blockquote><p>在mysql8.0中，优化了utf8mb4性能，并且已经将其设置为默认的字符集</p></blockquote><h2 id="比较规则"><a href="#比较规则" class="headerlink" title="比较规则"></a>比较规则</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 查看字符集</span><br><span class="line"><span class="keyword">SHOW</span> (<span class="type">CHARACTER</span> <span class="keyword">SET</span><span class="operator">|</span>CHARSET) [<span class="keyword">LIKE</span> 匹配的模式];</span><br><span class="line"># 查看比较规则</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">COLLATION</span> [<span class="keyword">LIKE</span> 匹配的模式];</span><br></pre></td></tr></table></figure><p>比较规则名称以与其关联的字符集的名称开头，后边紧跟着该比较规则主要作用于哪种语言</p><blockquote><p>utf8_polish_ci 表示以波兰语的规则比较，utf8_spanish_ci 是以西班牙语的规则比较， utf8_general_ci 是一种通用的比较规则。<br>名称后缀意味着该比较规则是否区分语言中的重音、大小写啥的，具体可以用的值如下：</p></blockquote><table><thead><tr><th align="center">后缀</th><th align="center">英文释义</th><th align="center">描述</th></tr></thead><tbody><tr><td align="center">_ai</td><td align="center">accent insensitive</td><td align="center">不区分重音</td></tr><tr><td align="center">_as</td><td align="center">accent sensitive</td><td align="center">区分重音</td></tr><tr><td align="center">_ci</td><td align="center">case insensitive</td><td align="center">不区分大小写</td></tr><tr><td align="center">_cs</td><td align="center">case sensitive</td><td align="center">区分大小写</td></tr><tr><td align="center">_bin</td><td align="center">binary</td><td align="center">以二进制方式比较</td></tr></tbody></table><p>比如 utf8_general_ci 这个比较规则是以 ci 结尾的，说明不区分大小写。<br>每种字符集对应若干种比较规则，每种字符集都有一种默认的比较规则， SHOW COLLATION 的返回结果中的Default 列的值为 YES 的就是该字符集的默认比较规则，比方说 utf8 字符集默认的比较规则就是utf8_general_ci 。</p><h2 id="再谈Mysql"><a href="#再谈Mysql" class="headerlink" title="再谈Mysql"></a>再谈Mysql</h2><p>mysql有4个级别的字符集和比较规则</p><h4 id="1-服务器级别"><a href="#1-服务器级别" class="headerlink" title="1.服务器级别"></a>1.服务器级别</h4><ul><li>character_set_server表示服务器级别的字符集</li><li>collation_server表示服务器级别的比较规则</li></ul><h4 id="2-数据库级别"><a href="#2-数据库级别" class="headerlink" title="2.数据库级别"></a>2.数据库级别</h4><p>创建和修改数据库时可以指定字符集和比较规则</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> 数据库名</span><br><span class="line">[[DEFULT] <span class="type">CHARACTER</span> <span class="keyword">SET</span> 字符集名称]</span><br><span class="line">[[DEFULT] <span class="keyword">COLLATE</span> 比较规则名称];</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> 数据库名</span><br><span class="line">[[DEFULT] <span class="type">CHARACTER</span> <span class="keyword">SET</span> 字符集名称]</span><br><span class="line">[[DEFULT] <span class="keyword">COLLATE</span> 比较规则名称];</span><br></pre></td></tr></table></figure><p>character_set_database表示当前数据库的字符集，collation_database表示当前数据库级别的比较规则。这两个比系统变量只能用来读取，修改它并不会改变当前数据库的字符集和比较规则。</p><p>如果没有指定当前数据库，则这两个系统变量与服务器级别相应的系统变量具有相同的值。</p><h4 id="3-表级别"><a href="#3-表级别" class="headerlink" title="3.表级别"></a>3.表级别</h4><p>创建和修改表时可以指定字符集和比较规则</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名</span><br><span class="line">[[DEFULT] <span class="type">CHARACTER</span> <span class="keyword">SET</span> 字符集名称]</span><br><span class="line">[<span class="keyword">COLLATE</span> 比较规则名称];</span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名</span><br><span class="line">[[DEFULT] <span class="type">CHARACTER</span> <span class="keyword">SET</span> 字符集名称]</span><br><span class="line">[<span class="keyword">COLLATE</span> 比较规则名称];</span><br></pre></td></tr></table></figure><h4 id="4-列级别"><a href="#4-列级别" class="headerlink" title="4.列级别"></a>4.列级别</h4><p>创建和修改列时可以指定字符集和比较规则</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名(</span><br><span class="line">列名 字符串类型 [<span class="type">CHARACTER</span> <span class="keyword">SET</span> 字符集名称] [<span class="keyword">COLLATE</span> 比较规则名称];</span><br><span class="line">...</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 MODIFY 列名 字符串类型 [<span class="type">CHARACTER</span> <span class="keyword">SET</span> 字符集名称] [<span class="keyword">COLLATE</span> 比较规则名称];</span><br></pre></td></tr></table></figure><h1 id="三、服务端与客户端的交互"><a href="#三、服务端与客户端的交互" class="headerlink" title="三、服务端与客户端的交互"></a>三、服务端与客户端的交互</h1><p>期间会发生字符集转换</p><ul><li>客户端发送的请求字节序列是采用哪种字符集进行编码的，这一步骤主要取决于操作系统当前使用的字符集</li><li>服务器接收到请求字节序列后会认为它是采用哪种字符集进行编码的（这一步骤取决于系统变量character_set_client的值）</li><li>服务器在运行过程中会把请求的字节序列转换为以哪种字符集编码的字节序列（这一步骤取决于系统变量character_set_connection的值）</li><li>服务器在向客户端返回字节序列时，是采用哪种字符集进行编码的（这一步骤取决于系统变量character_set_results的值）</li><li>客户端在收到响应字节序列后，根据当前系统使用的字符集，进行转换展示</li></ul><p>比较规则通常用来比较字符串的大小以及对某些字符串进行排列。</p>]]></content>
+    
+    
+    <summary type="html">&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+
+&lt;h1 id=&quot;一、字符集和比较规则简介&quot;&gt;&lt;a href=&quot;#一、字符集和比较规则简介&quot; class=&quot;headerlink&quot; title=&quot;一、字符集和比较规则简介&quot;&gt;&lt;/a&gt;一、字符集和比较规则简介&lt;/h1&gt;&lt;h2 id=&quot;字符集简介&quot;&gt;&lt;a href=&quot;#字符集简介&quot; class=&quot;headerlink&quot; title=&quot;字符集简介&quot;&gt;&lt;/a&gt;字符集简介&lt;/h2&gt;&lt;p&gt;计算机存储的是二进制数据，它存储字符串必须要建立字符串与二进制数据的映射关系&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编码：将字符映射成二进制数据的过程&lt;/li&gt;
+&lt;li&gt;解码：将二进制数据映射到字符串的过程&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="数据库" scheme="https://jinping.fun/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="Mysql" scheme="https://jinping.fun/tags/Mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>颓废生活的记录</title>
@@ -571,33 +598,6 @@ HTTP请求都是明文传输的，所谓的明文指的是没有经过加密的�
     
     
     <category term="Java基础" scheme="https://jinping.fun/tags/Java%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mongo分片集</title>
-    <link href="https://jinping.fun/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/"/>
-    <id>https://jinping.fun/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/</id>
-    <published>2020-12-18T08:21:51.000Z</published>
-    <updated>2021-12-06T09:23:00.860Z</updated>
-    
-    <content type="html"><![CDATA[<meta name="referrer" content="no-referrer"><h2 id="分片集的架构说明"><a href="#分片集的架构说明" class="headerlink" title="分片集的架构说明"></a>分片集的架构说明</h2><img src="/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/sharding.png" class title="分片集"><table><thead><tr><th align="center">名称</th><th align="center">解释</th><th align="left">作用</th></tr></thead><tbody><tr><td align="center">Shard</td><td align="center">分片集存储实例</td><td align="left">用于存储实际的数据块，实际生产环境中一个<code>shard server</code>角色可由几台机器组个一个<code>replica set</code>承担，防止单机节点故障</td></tr><tr><td align="center">config server</td><td align="center">分片集配置器</td><td align="left">存储了整个ClusterMetadata，其中包括 chunk信息</td></tr><tr><td align="center">mongos</td><td align="center">分片集路由器</td><td align="left">客户端由此接入，且让整个集群看上去像单一数据库，前端应用可以透明使用</td></tr></tbody></table><h2 id="为什么要使用分片集？"><a href="#为什么要使用分片集？" class="headerlink" title="为什么要使用分片集？"></a>为什么要使用分片集？</h2><p>一般有如下几个原因：</p><ul><li>数据容量日益增大，副本集维护吃力</li><li>增加集群的吞吐量</li><li>单库数据超过10TB</li><li>地理容灾</li></ul><h2 id="使用分片集的优劣势"><a href="#使用分片集的优劣势" class="headerlink" title="使用分片集的优劣势"></a>使用分片集的优劣势</h2><table><thead><tr><th align="left">优势</th><th align="left">劣势</th></tr></thead><tbody><tr><td align="left">1.海量数据存储有方案 <br>2.增加数据库的访问并发和集群的iops <br>3.跨机房灾备<br> 4.单库数据量有限<br></td><td align="left">1.成本高昂，一个高可用的分片集至少需要3台configServer，2个shardServer，每个shardServer都是为副本集，至少2个mongos组成。<br>2.分片集本身结构复杂，运维复杂。</td></tr></tbody></table><h2 id="1-如何进行分片？"><a href="#1-如何进行分片？" class="headerlink" title="1.如何进行分片？"></a>1.如何进行分片？</h2><h3 id="1-1-分片的基本标准"><a href="#1-1-分片的基本标准" class="headerlink" title="1.1 分片的基本标准"></a>1.1 分片的基本标准</h3><ul><li>1.数据角度:数据量不超过3TB，尽可能保持在2TB一个分片</li><li>2.索引角度:常用的索引必须能容纳进系统内存之中</li></ul><h3 id="1-2-分片的预估标准"><a href="#1-2-分片的预估标准" class="headerlink" title="1.2 分片的预估标准"></a>1.2 分片的预估标准</h3><p>A=(所需存储量/单服务可挂载容量)<br>B=(工作集大小/服务器内存<em>MongoDB可用内存率)<br>C=(并发量总数/单服务器</em>损耗系数)<br><strong>分片的数量=max(A,B,C)</strong><br>举个例子：<br>A=30TB/2TB=15<br>B=1TB/(64G<em>0.6)=27<br>C=200000/(8000</em>0.7)=36<br>分片数量=36</p><h3 id="1-3-分片的基本概念"><a href="#1-3-分片的基本概念" class="headerlink" title="1.3 分片的基本概念"></a>1.3 分片的基本概念</h3><table><thead><tr><th align="left">名称</th><th align="left">解释</th></tr></thead><tbody><tr><td align="left">分片键 shardkey</td><td align="left">文档中的一个字段</td></tr><tr><td align="left">文档doc</td><td align="left">包含分片键的一行数据</td></tr><tr><td align="left">块chunk</td><td align="left">包含N个文档</td></tr><tr><td align="left">分片shard</td><td align="left">包含N个chunk</td></tr><tr><td align="left">分片集群Cluster</td><td align="left">包含N个分片shard</td></tr></tbody></table><h3 id="1-4-选择合适的分片键"><a href="#1-4-选择合适的分片键" class="headerlink" title="1.4 选择合适的分片键"></a>1.4 选择合适的分片键</h3><h4 id="基于范围的分片"><a href="#基于范围的分片" class="headerlink" title="基于范围的分片"></a>基于范围的分片</h4><p>MongoDB按照片键的值的范围将数据拆分为不同的块（chunk），每个块包含了一段范围内的数据。</p><ul><li>优点： mongos可以快速定位请求需要的数据，并将请求转发到相应的Shard节点中。</li><li>缺点： 可能导致数据在Shard节点上分布不均衡，容易造成读写热点，且不具备写分散性。</li></ul><p>适用场景：</p><ul><li>片键的值不是单调递增或单调递减、片键的值基数大且重复的频率低、需要范围查询等业务场景。</li></ul><h4 id="基于hash值的分片"><a href="#基于hash值的分片" class="headerlink" title="基于hash值的分片"></a>基于hash值的分片</h4><p>MongoDB计算单个字段的哈希值作为索引值，并以哈希值的范围将数据拆分为不同的块。</p><ul><li>优点：可以将数据更加均衡地分布在各Shard节点中，具备写分散性。</li><li>缺点：不适合进行范围查询，进行范围查询时，需要将读请求分发到所有的Shard节点。</li></ul><p>适用场景：</p><ul><li>片键的值存在单调递增或递减、片键的值基数大且重复的频率低、需要写入的数据随机分发、数据读取随机性较大等业务场景。</li></ul><h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul><li>在4.0之前片键一经设置，不可修改，不可删除。在4.2之后可以对分片完的Collection进行修改分片键</li><li>执行了数据分片操作后，均衡器会对满足条件的数据进行拆分，这将占用实例的资源，请在业务低峰期操作。</li></ul><h3 id="1-5-分片操作"><a href="#1-5-分片操作" class="headerlink" title="1.5 分片操作"></a>1.5 分片操作</h3><p>1&gt;确认使用的实例为分片集群（执行<code>sh.status()</code>）<br>2&gt;切换数据库（执行 <code>use 数据库名</code>&gt;<br>3&gt;允许此库进行分片(执行 sh.enableSharding(“数据库名”))<br>4&gt;创建或使用已有的collection<br>5&gt;对collection中已创建索引的字段进行分片</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sh</span>.shardCollection(<span class="string">&quot;数据库名.表名&quot;</span>,&#123;<span class="string">&quot;_id&quot;</span>:<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure><p>6.经过一段时间查看一下数据在每个节点的分布</p><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.stats<span class="comment">()</span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
-
-
-&lt;h2 id=&quot;分片集的架构说明&quot;&gt;&lt;a href=&quot;#分片集的架构说明&quot; class=&quot;headerlink&quot; title=&quot;分片集的架构说明&quot;&gt;&lt;/a&gt;分片集的架构说明&lt;/h2&gt;&lt;i</summary>
-      
-    
-    
-    
-    <category term="数据库" scheme="https://jinping.fun/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="MongoDB" scheme="https://jinping.fun/tags/MongoDB/"/>
     
   </entry>
   
