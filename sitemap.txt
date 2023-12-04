@@ -1,5 +1,6 @@
-https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/
+https://jinping.fun/2023/12/04/Mysql-%E5%9B%9B-InnoDB%E6%95%B0%E6%8D%AE%E9%A1%B5%E7%BB%93%E6%9E%84/
 https://jinping.fun/2020/12/06/Mysql-%E4%B8%80-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/
+https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/
 https://jinping.fun/2023/11/20/%E6%B5%85%E8%B0%88%E6%9E%B6%E6%9E%84/
 https://jinping.fun/2023/11/19/Mysql-%E4%B8%89-%E5%AD%97%E7%AC%A6%E9%9B%86%E5%92%8C%E6%AF%94%E8%BE%83%E8%A7%84%E5%88%99/
 https://jinping.fun/about/index.html
@@ -49,8 +50,8 @@ https://jinping.fun/2020/12/18/mongo%E5%88%86%E7%89%87%E9%9B%86/
 https://jinping.fun/2020/11/22/Spring%E5%88%9D%E6%8E%A2/
 https://jinping.fun/2020/08/17/Nacos%E5%92%8C%E5%85%B6%E4%BB%96%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%9A%84%E6%AF%94%E8%BE%83/
 https://jinping.fun/2020/08/05/Nacos%E6%95%B4%E5%90%88SpringCloud/
-https://jinping.fun/2021/07/22/Java%E9%9D%9E%E9%98%BB%E5%A1%9EIO%E5%92%8C%E5%BC%82%E6%AD%A5IO/
 https://jinping.fun/2020/07/13/Maven%E8%A7%A3%E5%86%B3jar%E5%8C%85%E5%86%B2%E7%AA%81/
+https://jinping.fun/2021/07/22/Java%E9%9D%9E%E9%98%BB%E5%A1%9EIO%E5%92%8C%E5%BC%82%E6%AD%A5IO/
 https://jinping.fun/2021/07/20/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/
 https://jinping.fun/2021/04/04/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/
 https://jinping.fun/2020/10/27/Java%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8/
@@ -79,8 +80,8 @@ https://jinping.fun/tags/JVM/
 https://jinping.fun/tags/Java%E5%9F%BA%E7%A1%80/
 https://jinping.fun/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/
 https://jinping.fun/tags/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/
-https://jinping.fun/tags/IO/
 https://jinping.fun/tags/Maven/
+https://jinping.fun/tags/IO/
 https://jinping.fun/tags/Mysql/
 https://jinping.fun/tags/ShardingSphere/
 https://jinping.fun/tags/Spring/
