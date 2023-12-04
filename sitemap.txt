@@ -1,3 +1,4 @@
+https://jinping.fun/2023/12/04/Mysql-%E4%BA%94-B-%E6%A0%91%E7%B4%A2%E5%BC%95/
 https://jinping.fun/2023/12/04/Mysql-%E5%9B%9B-InnoDB%E6%95%B0%E6%8D%AE%E9%A1%B5%E7%BB%93%E6%9E%84/
 https://jinping.fun/2020/12/06/Mysql-%E4%B8%80-InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/
 https://jinping.fun/2020/12/07/Mysql-%E4%BA%8C-Mysql%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/
