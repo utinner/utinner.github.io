@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>二分查找 | JinpingのBlog</title>
+  <meta name="description" content="题目 给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。  解题思路| —- | ———————————————————— || 前提 | 给定一个内含 $n$ 个元素的有序数组 $A$，满足 $A_{0}\leq A_{1}\leq A_{2}\leq \cdots \l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分查找">
+<meta property="og:url" content="https://jinping.fun/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/index.html">
+<meta property="og:site_name" content="代码乐园">
+<meta property="og:description" content="题目 给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。  解题思路| —- | ———————————————————— || 前提 | 给定一个内含 $n$ 个元素的有序数组 $A$，满足 $A_{0}\leq A_{1}\leq A_{2}\leq \cdots \l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jinping.fun/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/1.png">
+<meta property="article:published_time" content="2023-12-06T14:03:06.000Z">
+<meta property="article:modified_time" content="2023-12-06T15:53:07.669Z">
+<meta property="article:author" content="JinPing">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jinping.fun/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/1.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://jinping.fun/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="代码乐园" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/utinner" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Jinping</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/utinner" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>持续更新中，欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Docker/" style="font-size: 13.67px;">Docker</a> <a href="/tags/Flink/" style="font-size: 13.17px;">Flink</a> <a href="/tags/IO/" style="font-size: 13px;">IO</a> <a href="/tags/JVM/" style="font-size: 13.67px;">JVM</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/Java%E5%9F%BA%E7%A1%80/" style="font-size: 13.17px;">Java基础</a> <a href="/tags/Maven/" style="font-size: 13px;">Maven</a> <a href="/tags/MongoDB/" style="font-size: 13.17px;">MongoDB</a> <a href="/tags/Mysql/" style="font-size: 13.5px;">Mysql</a> <a href="/tags/ShardingSphere/" style="font-size: 13px;">ShardingSphere</a> <a href="/tags/Spring/" style="font-size: 13px;">Spring</a> <a href="/tags/SpringCloud/" style="font-size: 14px;">SpringCloud</a> <a href="/tags/git/" style="font-size: 13.17px;">git</a> <a href="/tags/http%EF%BC%8Cssl/" style="font-size: 13px;">http，ssl</a> <a href="/tags/redis/" style="font-size: 14px;">redis</a> <a href="/tags/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" style="font-size: 13px;">内存模型</a> <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 13.17px;">分布式</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" style="font-size: 13.17px;">基础知识</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 13px;">多线程</a> <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" style="font-size: 13px;">定时任务</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 13px;">生活</a> <a href="/tags/%E7%A7%91%E6%99%AE/" style="font-size: 13px;">科普</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 13px;">算法</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E8%80%83%E7%A0%94%E8%8B%B1%E8%AF%AD/" style="font-size: 13.83px;">考研英语</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13px;">链表</a> <a href="/tags/%E9%9B%86%E7%BE%A4/" style="font-size: 13px;">集群</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 13.33px;">面试题</a> <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91%E8%A1%8C%E4%B8%9A/" style="font-size: 13px;">音视频行业</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法与数据结构</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" class="title">二分查找</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-06T14:03:06.000Z" itemprop="datePublished">2023-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/04/Mysql-%E4%BA%94-B-%E6%A0%91%E7%B4%A2%E5%BC%95/" class="title">Mysql(五)B+树索引</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-04T10:59:34.000Z" itemprop="datePublished">2023-12-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/04/Mysql-%E5%9B%9B-InnoDB%E6%95%B0%E6%8D%AE%E9%A1%B5%E7%BB%93%E6%9E%84/" class="title">Mysql(四)InnoDB数据页结构</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-04T08:10:15.000Z" itemprop="datePublished">2023-12-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/11/20/%E6%B5%85%E8%B0%88%E6%9E%B6%E6%9E%84/" class="title">浅谈架构</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-11-20T06:20:59.000Z" itemprop="datePublished">2023-11-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/11/19/Mysql-%E4%B8%89-%E5%AD%97%E7%AC%A6%E9%9B%86%E5%92%8C%E6%AF%94%E8%BE%83%E8%A7%84%E5%88%99/" class="title">Mysql(三)字符集和比较规则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-11-19T15:14:34.000Z" itemprop="datePublished">2023-11-19</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Q1-%E5%88%A4%E5%AE%9A%E6%9D%A1%E4%BB%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AFi-lt-j-%E4%B8%8D%E6%98%AFi-lt-j%EF%BC%9F"><span class="toc-number">3.1.</span> <span class="toc-text">Q1 判定条件为什么是i&lt;&#x3D;j,不是i&lt;j？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q2-i-j-2%E6%9C%89%E6%B2%A1%E6%9C%89%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">3.2.</span> <span class="toc-text">Q2 (i + j) &#x2F; 2有没有问题？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%86%99%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">另一种写法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE"><span class="toc-number">5.</span> <span class="toc-text">线性查找</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E6%80%A7%E8%83%BD"><span class="toc-number">6.</span> <span class="toc-text">二分查找性能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">6.1.</span> <span class="toc-text">时间复杂度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">6.2.</span> <span class="toc-text">空间复杂度</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%94%B9%E8%BF%9B"><span class="toc-number">7.</span> <span class="toc-text">算法改进</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%981%EF%BC%9A%E5%A6%82%E6%9E%9Ctarget%E6%81%B0%E5%A5%BD%E5%9C%A8%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B7%A6%E8%BE%B9%EF%BC%8C%E9%9C%80%E8%A6%81%E6%89%A7%E8%A1%8C%E5%88%A4%E6%96%ADl%E6%AC%A1%EF%BC%9B%E5%8F%8D%E4%B9%8B%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%81%B0%E5%A5%BD%E5%9C%A8%E6%9C%80%E5%8F%B3%E8%BE%B9%EF%BC%8C%E9%9C%80%E8%A6%81%E6%89%A7%E8%A1%8C%E5%88%A4%E6%96%AD2l%E6%AC%A1"><span class="toc-number">7.1.</span> <span class="toc-text">问题1：如果target恰好在数组的最左边，需要执行判断l次；反之，如果恰好在最右边，需要执行判断2l次</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E4%B8%ADArrays%E4%B8%AD%E7%9A%84%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-number">8.</span> <span class="toc-text">Java中Arrays中的二分查找</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Leftmost-%E4%B8%8E-Rightmost"><span class="toc-number">9.</span> <span class="toc-text">Leftmost 与 Rightmost</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">9.1.</span> <span class="toc-text">应用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9B%E6%89%A335"><span class="toc-number">10.</span> <span class="toc-text">力扣35</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">10.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">10.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9B%E6%89%A334"><span class="toc-number">11.</span> <span class="toc-text">力扣34</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="toc-number">11.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-2"><span class="toc-number">11.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-二分查找" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      二分查找
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" class="article-date">
+	  <time datetime="2023-12-06T14:03:06.000Z" itemprop="datePublished">2023-12-06</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">算法与数据结构</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" class="leancloud_visitors"  data-flag-title="二分查找">0</span>
+    </span>
+
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.1k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 10(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer">
+
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><blockquote>
+<p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p>
+</blockquote>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>| —- | ———————————————————— |<br>| 前提 | 给定一个内含 $n$ 个元素的有序数组 $A$，满足 $A_{0}\leq A_{1}\leq A_{2}\leq \cdots \leq A_{n-1}$，一个待查值 $target$ |<br>| 1    | 设置 $i=0$，$j=n-1$                                          |<br>| 2    | 如果 $i \gt j$，结束查找，没找到                             |<br>| 3    | 设置 $m = floor(\frac {i+j}{2})$ ，$m$ 为中间索引，$floor$ 是向下取整（$\leq \frac {i+j}{2}$ 的最小整数） |<br>| 4    | 如果 $target &lt; A_{m}$ 设置 $j = m - 1$，跳到第2步            |<br>| 5    | 如果 $A_{m} &lt; target$ 设置 $i = m + 1$，跳到第2步            |<br>| 6    | 如果 $A_{m} = target$，结束查找，找到了                      |</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = a.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= j) &#123;</span><br><span class="line">		<span class="keyword">int</span> m = (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">target</span> &lt; a[m]) &#123;			<span class="comment">// 在左边</span></span><br><span class="line">			j = m - <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(a[m] &lt; <span class="keyword">target</span>)</span> </span>&#123;		<span class="comment">// 在右边</span></span><br><span class="line">			i = m + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> m;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Q1-判定条件为什么是i-lt-j-不是i-lt-j？"><a href="#Q1-判定条件为什么是i-lt-j-不是i-lt-j？" class="headerlink" title="Q1 判定条件为什么是i&lt;=j,不是i&lt;j？"></a>Q1 判定条件为什么是i&lt;=j,不是i&lt;j？</h2><blockquote>
+<p>i==j 意味着i，j他们指向的元素也会参与比较<br>i&lt;j只以为着指向m的元素参与比较</p>
+</blockquote>
+<h2 id="Q2-i-j-2有没有问题？"><a href="#Q2-i-j-2有没有问题？" class="headerlink" title="Q2 (i + j) / 2有没有问题？"></a>Q2 <code>(i + j) / 2</code>有没有问题？</h2><blockquote>
+<p>有问题，如果数组的长度足够大，则会导致数组下标越界</p>
+</blockquote>
+<p>参考如下代码：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">public</span> static <span class="type">void</span> main(String[] args) &#123;</span><br><span class="line">	<span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> j = <span class="type">Integer</span>.MAX_VALUE - <span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> m = (i + j) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">System</span>.<span class="keyword">out</span>.println(m);</span><br><span class="line">	i = m + <span class="number">1</span>;</span><br><span class="line">	m = (i+ j) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">System</span>.<span class="keyword">out</span>.println(m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">-----</span></span><br><span class="line">运行结果：</span><br><span class="line"><span class="number">1073741823</span></span><br><span class="line"><span class="number">-536870913</span></span><br><span class="line"></span><br><span class="line">Process finished <span class="keyword">with</span> <span class="keyword">exit</span> code <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>改为无符号右移相当于将一个数除以2</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">public</span> static <span class="type">void</span> main(String[] args) &#123;</span><br><span class="line">	<span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> j = <span class="type">Integer</span>.MAX_VALUE - <span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> m = (i + j) &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">System</span>.<span class="keyword">out</span>.println(m);</span><br><span class="line">	i = m + <span class="number">1</span>;</span><br><span class="line">	m = (i+ j) &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">System</span>.<span class="keyword">out</span>.println(m);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">----</span></span><br><span class="line">运行结果：</span><br><span class="line"><span class="number">536870911</span></span><br><span class="line"><span class="number">671088639</span></span><br><span class="line"></span><br><span class="line">Process finished <span class="keyword">with</span> <span class="keyword">exit</span> code <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="另一种写法"><a href="#另一种写法" class="headerlink" title="另一种写法"></a>另一种写法</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = a.length;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">		<span class="keyword">int</span> m = (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">target</span> &lt; a[m]) &#123;			<span class="comment">// 在左边</span></span><br><span class="line">			j = m;</span><br><span class="line">		&#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(a[m] &lt; <span class="keyword">target</span>)</span> </span>&#123;		<span class="comment">// 在右边</span></span><br><span class="line">			i = m + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> m;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改动一共有三处：</p>
+<ul>
+<li>初始化j的时候由原来的<code>a.length - 1</code>改为<code>a.length</code></li>
+<li>循环判断条件由<code>i &lt;= j</code>改为<code>i &lt; j</code></li>
+<li>当判断<code>target &lt; a[m]</code>命中时，j的赋值由<code>m - 1</code>改为了<code>m</code></li>
+</ul>
+<p>i,j 对应着搜索区间 <code>[0,a.length)</code>（注意是左闭右开的区间），<code>i&lt;j</code> 意味着搜索区间内还有未比较的元素，<code>j</code> 指向的一定不是查找目标</p>
+<p><strong>为啥这次不加 $i==j$ 的条件了？</strong></p>
+<blockquote>
+<p>这回 $j$ 指向的不是查找目标，如果还加 i==j 条件，就意味着 j 指向的还会再次比较，找不到时，会死循环</p>
+</blockquote>
+<p>如果某次要缩小右边界，那么 j=m，因为此时的 m 已经不是查找目标了</p>
+<h1 id="线性查找"><a href="#线性查找" class="headerlink" title="线性查找"></a>线性查找</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; a.length; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[i] == <span class="keyword">target</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该算法的时间复杂度为 <em>O(n)</em></p>
+<h1 id="二分查找性能"><a href="#二分查找性能" class="headerlink" title="二分查找性能"></a>二分查找性能</h1><h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>二分查找的时间复杂度为<em>O(log(n))</em><br>最好的情况是target刚好在中间，时间复杂度为<em>O(1)</em></p>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>需要常数个指针 <code>i,j,m</code>，因此额外占用的空间是 <em>O(1)</em> </p>
+<h1 id="算法改进"><a href="#算法改进" class="headerlink" title="算法改进"></a>算法改进</h1><h2 id="问题1：如果target恰好在数组的最左边，需要执行判断l次；反之，如果恰好在最右边，需要执行判断2l次"><a href="#问题1：如果target恰好在数组的最左边，需要执行判断l次；反之，如果恰好在最右边，需要执行判断2l次" class="headerlink" title="问题1：如果target恰好在数组的最左边，需要执行判断l次；反之，如果恰好在最右边，需要执行判断2l次"></a>问题1：如果target恰好在数组的最左边，需要执行判断l次；反之，如果恰好在最右边，需要执行判断2l次</h2><p>如果要使得这种场景下判断次数相同，需要改进</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">binarySearchBalance</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = a.length;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span> &lt; j - i) &#123;</span><br><span class="line">		<span class="keyword">int</span> m = (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">target</span> &lt; a[m]) &#123;</span><br><span class="line">			j = m;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			i = m;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> (a[i] == <span class="keyword">target</span>) ? i : -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>思想</strong></p>
+<ol>
+<li>左闭右开的区间，i 指向的可能是目标，而 j 指向的不是目标</li>
+<li>不奢望循环内通过 m 找出目标, 缩小区间直至剩 1 个, 剩下的这个可能就是要找的（通过 i）<ul>
+<li><code>j - i &gt; 1</code> 的含义是，在范围内待比较的元素个数 &gt; 1</li>
+</ul>
+</li>
+<li>改变 i 边界时，它指向的可能是目标，因此不能 m+1</li>
+<li>循环内的平均比较次数减少了</li>
+<li>时间复杂度 <em>Theta((log(n)))</em></li>
+</ol>
+<h1 id="Java中Arrays中的二分查找"><a href="#Java中Arrays中的二分查找" class="headerlink" title="Java中Arrays中的二分查找"></a>Java中Arrays中的二分查找</h1><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">binarySearch0</span>(<span class="type">long</span>[] a, <span class="type">int</span> fromIndex, <span class="type">int</span> toIndex,</span><br><span class="line">									 <span class="type">long</span> <span class="built_in">key</span>) &#123;</span><br><span class="line">	<span class="type">int</span> low = fromIndex;</span><br><span class="line">	<span class="type">int</span> high = toIndex - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">		<span class="type">int</span> mid = (low + high) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="type">long</span> midVal = a[mid];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (midVal &lt; <span class="built_in">key</span>)</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (midVal &gt; <span class="built_in">key</span>)</span><br><span class="line">			high = mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> mid; <span class="comment">// key found</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> -(low + <span class="number">1</span>);  <span class="comment">// key not found.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终返回的结果是：<code>-(low + 1)</code><br>其含义是如果没找到元素，则返回插入点向后移一位的相反数</p>
+<ul>
+<li>low 左侧元素肯定都比 target 小，因此 low 即插入点</li>
+<li>插入点取负是为了与找到情况区分</li>
+<li>-1 是为了把索引 0 位置的插入点与找到的情况进行区分</li>
+</ul>
+<h1 id="Leftmost-与-Rightmost"><a href="#Leftmost-与-Rightmost" class="headerlink" title="Leftmost 与 Rightmost"></a>Leftmost 与 Rightmost</h1><p>有时我们希望返回的是最左侧的重复元素，如果用 Basic 二分查找</p>
+<ul>
+<li><p>对于数组 $[1, 2, 3, 4, 4, 5, 6, 7]$，查找元素4，结果是索引3</p>
+</li>
+<li><p>对于数组 $[1, 2, 4, 4, 4, 5, 6, 7]$，查找元素4，结果也是索引3，并不是最左侧的元素</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">binarySearchLeftmost1</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">	<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = a.length - <span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> <span class="variable">candidate</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= j) &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (target &lt; a[m]) &#123;</span><br><span class="line">			j = m - <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[m] &lt; target) &#123;</span><br><span class="line">			i = m + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			candidate = m; <span class="comment">// 记录候选位置</span></span><br><span class="line">			j = m - <span class="number">1</span>;     <span class="comment">// 继续向左</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> candidate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果希望返回的是最右侧元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">binarySearchRightmost1</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">	<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = a.length - <span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> <span class="variable">candidate</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= j) &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (target &lt; a[m]) &#123;</span><br><span class="line">			j = m - <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[m] &lt; target) &#123;</span><br><span class="line">			i = m + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			candidate = m; <span class="comment">// 记录候选位置</span></span><br><span class="line">			i = m + <span class="number">1</span>;	   <span class="comment">// 继续向右</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> candidate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>对于 Leftmost 与 Rightmost，可以返回一个比 -1 更有用的值</p>
+<p><strong>Leftmost 改为</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">binarySearchLeftmost</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">	<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = a.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= j) &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (target &lt;= a[m]) &#123;</span><br><span class="line">			j = m - <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			i = m + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> i; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>leftmost 返回值的另一层含义：$\lt target$ 的元素个数</li>
+<li>小于等于中间值，都要向左找</li>
+</ul>
+<p><strong>Rightmost 改为</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">binarySearchRightmost</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">	<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = a.length - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= j) &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (target &lt; a[m]) &#123;</span><br><span class="line">			j = m - <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			i = m + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> i - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>大于等于中间值，都要向右找</li>
+</ul>
+<p><strong>几个名词</strong></p>
+<img src="/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/1.png" class title="n">
+
+<p><strong>求排名</strong>：<code>leftmost(target) + 1</code><br><strong>求前任（predecessor）</strong>：<code>leftmost(target) - 1</code><br><strong>求后任（successor）</strong>：<code>rightmost(target)+1</code><br><strong>求最近邻居</strong>：前任和后任距离更近者</p>
+<h1 id="力扣35"><a href="#力扣35" class="headerlink" title="力扣35"></a>力扣35</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。<br>请必须使用时间复杂度为 O(log n) 的算法。</p>
+</blockquote>
+<h2 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>,j = nums.length - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(i &lt;= j)&#123;</span><br><span class="line">			<span class="keyword">int</span> m = (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(nums[m] &lt; <span class="keyword">target</span>)&#123;</span><br><span class="line">				i = m + <span class="number">1</span>;</span><br><span class="line">			&#125;<span class="function"><span class="keyword">else</span> <span class="title">if</span><span class="params">(<span class="keyword">target</span> &lt; nums[m])</span></span>&#123;</span><br><span class="line">				j = m - <span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> m;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>leftmost方法</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> <span class="keyword">target</span>)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>,j = nums.length - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(i &lt;= j)&#123;</span><br><span class="line">			<span class="keyword">int</span> m = (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">target</span> &lt;= nums[m] )&#123;</span><br><span class="line">				j = m - <span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				i = m + <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="力扣34"><a href="#力扣34" class="headerlink" title="力扣34"></a>力扣34</h1><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。<br>如果数组中不存在目标值 target，返回 [-1, -1]。<br>你必须设计并实现时间复杂度为 O(log n) 的算法解决此问题。</p>
+</blockquote>
+<h2 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line">	public <span class="built_in">int</span><span class="literal">[]</span> search<span class="constructor">Range(<span class="params">int</span>[] <span class="params">nums</span>, <span class="params">int</span> <span class="params">target</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">int</span> left = get<span class="constructor">Left(<span class="params">nums</span>,<span class="params">target</span>,<span class="params">true</span>)</span>;</span><br><span class="line">		<span class="keyword">if</span> (left<span class="operator"> == </span>-<span class="number">1</span>)&#123;</span><br><span class="line">			return <span class="keyword">new</span> <span class="built_in">int</span><span class="literal">[]</span>&#123;-<span class="number">1</span>,-<span class="number">1</span>&#125;;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			return <span class="keyword">new</span> <span class="built_in">int</span><span class="literal">[]</span>&#123;left,get<span class="constructor">Left(<span class="params">nums</span>,<span class="params">target</span>,<span class="params">false</span>)</span>&#125;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public <span class="built_in">int</span> get<span class="constructor">Left(<span class="params">int</span>[] <span class="params">nums</span>, <span class="params">int</span> <span class="params">target</span>, <span class="params">boolean</span> <span class="params">isLeft</span>)</span>&#123;</span><br><span class="line">		<span class="built_in">int</span> i = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">int</span> j = nums.length - <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">int</span> candate = -<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(i &lt;= j)&#123;</span><br><span class="line">			<span class="built_in">int</span> m = (i + j) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(target &lt; nums<span class="literal">[<span class="identifier">m</span>]</span>)&#123;</span><br><span class="line">				j = m - <span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(target &gt; nums<span class="literal">[<span class="identifier">m</span>]</span>)&#123;</span><br><span class="line">				i = m + <span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			   candate = m;</span><br><span class="line">			   <span class="keyword">if</span>(isLeft)&#123;</span><br><span class="line">				   j = m - <span class="number">1</span>;</span><br><span class="line">			   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					i = m + <span class="number">1</span>;</span><br><span class="line">			   &#125;</span><br><span class="line">			   </span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return candate;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://jinping.fun/2023/12/06/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" title="二分查找" target="_blank" rel="external">https://jinping.fun/2023/12/06/二分查找/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/utinner" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/utinner" target="_blank"><span class="text-dark">Jinping</span><small class="ml-1x"></small></a></h3>
+        <div>学习最大的好处就是让自己更爱学习！</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2023/12/04/Mysql-%E4%BA%94-B-%E6%A0%91%E7%B4%A2%E5%BC%95/" title="Mysql(五)B+树索引"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">    <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="qq,wechat" data-mobile-sites="weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/utinner" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2023 JinPing
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!-- custom analytics part create by xiamo -->
+<script defer src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script defer>
+AV.init({
+  appId: 'BNPHGqdExiXaEZFh4AgOPmmu-gzGzoHsz',
+  appKey: 's3p79Nt6MZRbWf5rPoOj9DES'
+});
+
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+		var visitors= $('.leancloud_visitors');
+		query.greaterThanOrEqualTo("time", 0);		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {				
+					return;
+				}
+				var data = results;
+				visitors.each(function(){
+					var url = $(this).attr('id').trim();					
+					for (var i = 0; i < data.length; i++) {
+						var object = data[i];
+						var content = object.get('time');
+						var _url = object.get('url')
+						if(url == _url){
+							$(this).text(content);
+						}
+					}
+				})
+				
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else {
+		showTime(Counter);
+	}
+}); 
+</script>
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>
